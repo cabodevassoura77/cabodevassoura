@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HelpCircle | Fórum de Dúvidas e Ajuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">HC</span>
+      <div>
+        <h1>HelpCircle</h1>
+        <p>Micro-SaaS para dúvidas, dicas e ajuda em comunidade</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost">Explorar</button>
+      <button class="btn btn-primary">Assinar Pro</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel nav-panel">
+      <h2>Navegação</h2>
+      <nav>
+        <a href="#" class="active">For You</a>
+        <a href="#">Categorias</a>
+        <a href="#">Mentorias</a>
+        <a href="#">Mensagens</a>
+        <a href="#">Configurações</a>
+      </nav>
+
+      <section class="rules-box">
+        <h3>Regras da comunidade</h3>
+        <ul>
+          <li>🚫 Conteúdo pornográfico é proibido em posts, chat e chamadas.</li>
+          <li>⚠️ Assédio, spam e discurso de ódio geram banimento.</li>
+          <li>✅ Mantenha o foco em ajuda e colaboração profissional.</li>
+        </ul>
+      </section>
+    </aside>
+
+    <section class="content">
+      <article class="panel composer">
+        <h2>Publicar nova dúvida</h2>
+        <p>Explique seu problema, objetivo e contexto para receber melhores respostas.</p>
+        <form id="postForm">
+          <label>
+            Título do post
+            <input id="postTitle" type="text" placeholder="Ex.: Como validar ideia de micro-SaaS em 7 dias?" required />
+          </label>
+          <label>
+            Descrição
+            <textarea id="postContent" rows="4" placeholder="Detalhe o desafio e o que você já tentou..." required></textarea>
+          </label>
+          <div class="form-actions">
+            <span class="hint">💡 Dica: posts com contexto recebem mais comentários úteis.</span>
+            <button type="submit" class="btn btn-primary">Publicar no For You</button>
+          </div>
+        </form>
+      </article>
+
+      <section class="feed-header">
+        <h2>For You</h2>
+        <p>Posts recomendados de pessoas que precisam de ajuda agora.</p>
+      </section>
+
+      <section id="feed" class="feed"></section>
+    </section>
+
+    <aside class="panel side-panel">
+      <section>
+        <h2>Mensagens diretas</h2>
+        <p>Conecte-se em privado com quem solicitou ajuda.</p>
+        <button class="btn btn-secondary" id="openDmBtn">Abrir DM rápida</button>
+      </section>
+
+      <section class="call-section">
+        <h2>Video Call de Ajuda</h2>
+        <p>Inicie uma chamada para mentoria colaborativa.</p>
+        <button class="btn btn-primary" id="startCallBtn">Iniciar chamada</button>
+        <small class="warning">⚠️ Durante chamadas e chat, é proibido conteúdo pornográfico ou explícito. Violações causam bloqueio imediato.</small>
+      </section>
+
+      <section>
+        <h2>Planos</h2>
+        <div class="pricing">
+          <div>
+            <strong>Starter</strong>
+            <p>Comunidade + comentários</p>
+          </div>
+          <span>R$0</span>
+        </div>
+        <div class="pricing featured">
+          <div>
+            <strong>Pro</strong>
+            <p>Ranking, analytics e salas privadas</p>
+          </div>
+          <span>R$49/mês</span>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="dmModal" class="modal">
+    <div class="modal-head">
+      <h3>DM rápida</h3>
+      <button class="close" data-close="dmModal">✕</button>
+    </div>
+    <p>Conversa com <strong>@mentor_disponivel</strong></p>
+    <div class="chat-box">
+      <p><b>@mentor_disponivel:</b> Oi! Vi seu post e posso ajudar.</p>
+      <p><b>Você:</b> Obrigado! Posso explicar melhor meu cenário?</p>
+    </div>
+    <textarea id="dmInput" rows="3" placeholder="Digite sua mensagem..."></textarea>
+    <small class="warning">🚫 É proibido enviar conteúdo pornográfico, nudez ou material sexual. Mensagens são moderadas.</small>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close="dmModal">Fechar</button>
+      <button class="btn btn-primary" id="sendDmBtn">Enviar DM</button>
+    </div>
+  </dialog>
+
+  <dialog id="callModal" class="modal">
+    <div class="modal-head">
+      <h3>Sala de Videochamada</h3>
+      <button class="close" data-close="callModal">✕</button>
+    </div>
+    <div class="video-mock">
+      <div>
+        <p>Você</p>
+      </div>
+      <div>
+        <p>Mentor</p>
+      </div>
+    </div>
+    <p class="call-info">Chamada ativa por 00:00 • Modo seguro habilitado</p>
+    <small class="warning">⚠️ AVISO LEGAL: Conteúdo pornográfico, sexual explícito, nudez e qualquer material impróprio são estritamente proibidos na chamada. A sessão pode ser encerrada e a conta suspensa.</small>
+    <div class="modal-actions">
+      <button class="btn btn-danger" data-close="callModal">Encerrar chamada</button>
+    </div>
+  </dialog>
+
+  <template id="postTemplate">
+    <article class="panel post-card">
+      <header>
+        <div>
+          <h3 class="post-title"></h3>
+          <p class="meta"></p>
+        </div>
+        <button class="btn btn-ghost small">Seguir</button>
+      </header>
+      <p class="post-content"></p>
+      <div class="post-actions">
+        <button class="btn btn-ghost like-btn">👍 Ajudou (<span>0</span>)</button>
+        <button class="btn btn-ghost comment-toggle">💬 Comentários</button>
+        <button class="btn btn-ghost dm-inline">📩 Enviar DM</button>
+      </div>
+      <section class="comments hidden">
+        <div class="comments-list"></div>
+        <form class="comment-form">
+          <input type="text" placeholder="Escreva uma dica para ajudar..." required />
+          <button class="btn btn-secondary" type="submit">Comentar</button>
+        </form>
+      </section>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
